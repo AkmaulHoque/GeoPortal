@@ -1,0 +1,17 @@
+GeoPortal Desktop - quickest way to get installers
+===================================================
+1. Put this folder in a GitHub repository.
+2. Open GitHub -> Actions -> Build GeoPortal Desktop -> Run workflow.
+3. Download the generated artifacts:
+   - GeoPortal-Desktop-win-x64 -> Windows .exe installer
+   - GeoPortal-Desktop-mac-x64 -> Intel Mac .dmg
+   - GeoPortal-Desktop-mac-arm64 -> Apple Silicon Mac .dmg
+
+The workflow bundles:
+- your GeoPortal WAR
+- Apache Tomcat 9
+- a Java runtime
+- GDAL / OGR / PDAL + Python/GDAL Calc
+
+The desktop app runs its backend locally on 127.0.0.1 and stores GeoPortal data
+in the logged-in user's application data folder.

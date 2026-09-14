@@ -1,0 +1,10 @@
+GeoPortal Desktop conversion summary
+====================================
+Source received: exploded Java Servlet/Tomcat web application.
+Servlet namespace: javax.servlet (Tomcat 9 / Java EE 8 compatible).
+Class-file level: Java 8 (major version 52).
+Desktop wrapper: Electron + embedded Tomcat + bundled Java runtime.
+GIS engine: GDAL/OGR/PDAL from bundled conda-forge runtime, with system fallback.
+Local binding: 127.0.0.1 only; dynamic free port selected at startup.
+Persistent data: userData/runtime/data via GEOPORTAL_DATA_DIR.
+Build targets: Windows x64 NSIS, macOS x64 DMG, macOS arm64 DMG.

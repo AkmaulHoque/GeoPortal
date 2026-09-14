@@ -1,0 +1,94 @@
+{
+  "name": "geoportal-desktop",
+  "version": "1.0.0",
+  "description": "Desktop edition of GeoPortal for Windows and macOS",
+  "main": "app/main.js",
+  "author": "GeoPortal Project",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist:win": "electron-builder --win nsis --x64",
+    "dist:mac:x64": "electron-builder --mac dmg --x64",
+    "dist:mac:arm64": "electron-builder --mac dmg --arm64",
+    "dist:mac": "electron-builder --mac dmg --x64 --arm64",
+    "verify:war": "node scripts/verify-war.mjs"
+  },
+  "dependencies": {
+    "tar": "^7.4.3"
+  },
+  "devDependencies": {
+    "electron": "^38.0.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "org.geoportal.desktop",
+    "productName": "GeoPortal Desktop",
+    "asar": true,
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "app/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "resources/geoportal.war",
+        "to": "geoportal.war"
+      },
+      {
+        "from": "runtime/tomcat",
+        "to": "tomcat"
+      },
+      {
+        "from": "runtime/java",
+        "to": "java"
+      },
+      {
+        "from": "runtime/gis-runtime.tar.gz",
+        "to": "gis-runtime.tar.gz"
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico",
+      "artifactName": "GeoPortal-Desktop-${version}-Windows-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "GeoPortal Desktop"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "icon": "build/icon.png",
+      "category": "public.app-category.education",
+      "hardenedRuntime": false,
+      "gatekeeperAssess": false,
+      "artifactName": "GeoPortal-Desktop-${version}-macOS-${arch}.${ext}"
+    },
+    "dmg": {
+      "title": "GeoPortal Desktop ${version}",
+      "backgroundColor": "#0b2f2a"
+    }
+  }
+}

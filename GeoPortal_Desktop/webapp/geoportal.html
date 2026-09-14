@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="geoportal-api-base" content="/geoportal/">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="description" content="Interactive agricultural GIS, agroclimatology and water-management geoportal">
+  <title>AgriGeo Analytics Portal</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@10.10.0/ol.css" onerror="this.onerror=null;this.href='https://unpkg.com/ol@10.10.0/ol.css'">
+  <link rel="stylesheet" href="assets/app.css?v=20260824-contextfix-v5">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">AG</div>
+      <div class="brand-copy"><h1>AgriGeo Analytics Portal</h1><p>GIS · Remote Sensing · Agroclimatology · Water Management</p></div>
+      <button id="sidebarToggle" class="sidebar-toggle" type="button" aria-label="Minimize analysis sidebar" title="Minimize sidebar">‹</button>
+    </div>
+
+    <nav class="tabs" aria-label="Geoportal analysis modules">
+      <button class="tab active" data-panel="data">Data</button>
+      <button class="tab" data-panel="preprocess">Preprocess</button>
+      <button class="tab" data-panel="agriculture">Agriculture</button>
+      <button class="tab" data-panel="climate">Climate</button>
+      <button class="tab" data-panel="water">Water</button>
+      <button class="tab" data-panel="services">OGC</button>
+      <button class="tab" data-panel="export">Export</button>
+    </nav>
+
+    <div class="panels">
+      <section id="panel-data" class="panel active">
+        <div class="module-banner"><span class="module-icon">01</span><div><b>Data workspace</b><small>Upload, preview and organize raster, vector and LiDAR datasets.</small></div></div>
+        <div class="section">
+          <h2>Local vector preview</h2>
+          <div id="drop" class="drop">Drop GeoJSON, KML, GPX or zipped Shapefile here<br><span class="small">or select a local file</span></div>
+          <div class="field"><input id="localFile" type="file" accept=".geojson,.json,.kml,.gpx,.zip"></div>
+        </div>
+        <div class="section">
+          <h2>Upload GIS / RS data</h2>
+          <div class="field"><input id="serverFile" type="file" multiple accept=".shp,.shx,.dbf,.prj,.cpg,.qix,.sbn,.sbx,.zip,.geojson,.json,.kml,.gpx,.gpkg,.gml,.tif,.tiff,.img,.vrt,.nc,.hdf,.h5,.asc,.grd,.jp2,.bil,.dem,.las,.laz,.copc,.csv"></div>
+          <button id="uploadBtn" class="btn primary">Upload dataset</button>
+          <p class="help">Shapefile: select the matching <b>.shp + .shx + .dbf + .prj</b> files together, or upload a ZIP. Supported raster/vector datasets are automatically visualized after upload. Server results can be exported as <b>SHP</b> or <b>GeoTIFF</b> from the dataset list.</p>
+        </div>
+        <div class="section">
+          <div class="section-head"><h2>Server datasets</h2><button id="refreshFiles" class="mini-btn">Refresh</button></div>
+          <div id="fileList"></div>
+        </div>
+        <div class="section">
+          <h2>Processing capability</h2>
+          <div id="health" class="help">Checking GDAL / OGR / PDAL / raster calculator…</div>
+        </div>
+      </section>
+
+      <section id="panel-preprocess" class="panel">
+        <div class="module-banner"><span class="module-icon">02</span><div><b>Preprocessing & terrain</b><small>Prepare datasets before agricultural and hydrological analysis.</small></div></div>
+        <div class="section">
+          <h2>Input and preprocessing tool</h2>
+          <div class="field"><label for="prepInput">Input server dataset</label><select id="prepInput" class="dataset-select"></select></div>
+          <div class="field"><label for="prepOperation">Operation</label><select id="prepOperation">
+            <optgroup label="Raster preparation">
+              <option value="raster_info">Raster information</option>
+              <option value="raster_convert">Convert to GeoTIFF</option>
+              <option value="raster_reproject">Reproject raster</option>
+              <option value="raster_resample">Resample pixel size</option>
+              <option value="raster_clip_bbox">Clip raster by bounding box</option>
+              <option value="raster_hillshade">DEM hillshade</option>
+              <option value="raster_slope">DEM slope</option>
+              <option value="raster_aspect">DEM aspect</option>
+              <option value="raster_contour">DEM contours</option>
+            </optgroup>
+            <optgroup label="Vector preparation">
+              <option value="vector_info">Vector information</option>
+              <option value="vector_convert">Convert to GeoPackage</option>
+              <option value="vector_reproject">Reproject vector</option>
+              <option value="vector_makevalid">Repair geometries</option>
+              <option value="vector_simplify">Simplify geometry</option>
+              <option value="vector_clip_bbox">Clip vector by bounding box</option>
+            </optgroup>
+            <optgroup label="LiDAR / point cloud">
+              <option value="lidar_info">Point-cloud metadata</option>
+              <option value="lidar_convert">LAS/LAZ conversion</option>
+              <option value="lidar_ground">Extract ground points (SMRF)</option>
+            </optgroup>
+          </select></div>
+          <div class="row"><div class="field"><label for="epsg">Target EPSG</label><input id="epsg" type="number" value="4326"></div><div class="field"><label for="resampling">Resampling</label><select id="resampling"><option>bilinear</option><option>near</option><option>cubic</option><option>lanczos</option><option>average</option><option>mode</option></select></div></div>
+          <div class="row"><div class="field"><label for="pixelSize">Target pixel size</label><input id="pixelSize" type="number" min="0" step="any" value="10"></div><div class="field"><label for="interval">Contour interval</label><input id="interval" type="number" min="0" step="any" value="10"></div></div>
+          <div class="field"><label>Clip bounding box (dataset CRS)</label><div class="bbox-grid"><input id="xmin" type="number" step="any" placeholder="xmin"><input id="ymin" type="number" step="any" placeholder="ymin"><input id="xmax" type="number" step="any" placeholder="xmax"><input id="ymax" type="number" step="any" placeholder="ymax"></div></div>
+          <div class="row"><div class="field"><label for="tolerance">Simplify tolerance</label><input id="tolerance" type="number" min="0" step="any" value="1"></div><div class="field"><label for="prepOutput">Output filename</label><input id="prepOutput" placeholder="auto-generated"></div></div>
+          <button id="runPrep" class="btn primary">Run preprocessing</button>
+          <pre id="prepLog">Choose a server dataset and preprocessing operation.</pre>
+        </div>
+      </section>
+
+      <section id="panel-agriculture" class="panel">
+        <div class="module-banner agriculture"><span class="module-icon">03</span><div><b>Agricultural remote sensing</b><small>Generate crop and vegetation indicators from multispectral raster data.</small></div></div>
+        <div class="section">
+          <h2>Vegetation / crop index</h2>
+          <div class="field"><label for="agriInput">Multiband raster</label><select id="agriInput" class="dataset-select"></select></div>
+          <div class="field"><label for="agriOperation">Index</label><select id="agriOperation">
+            <option value="index_ndvi">NDVI — Normalized Difference Vegetation Index</option>
+            <option value="index_savi">SAVI — Soil Adjusted Vegetation Index</option>
+            <option value="index_evi">EVI — Enhanced Vegetation Index</option>
+            <option value="index_ndwi">NDWI — Green/NIR Water Index</option>
+            <option value="index_ndmi">NDMI — NIR/SWIR1 Moisture Index</option>
+            <option value="index_nbr">NBR — NIR/SWIR2 Burn Index</option>
+          </select></div>
+          <div class="band-grid">
+            <label>Blue band<input id="bandBlue" type="number" min="1" value="2"></label>
+            <label>Green band<input id="bandGreen" type="number" min="1" value="3"></label>
+            <label>Red band<input id="bandRed" type="number" min="1" value="4"></label>
+            <label>NIR band<input id="bandNir" type="number" min="1" value="5"></label>
+            <label>SWIR1 band<input id="bandSwir1" type="number" min="1" value="6"></label>
+            <label>SWIR2 band<input id="bandSwir2" type="number" min="1" value="7"></label>
+          </div>
+          <div class="row"><div class="field"><label for="saviL">SAVI L factor</label><input id="saviL" type="number" min="0" max="1" step="0.1" value="0.5"></div><div class="field"><label for="agriOutput">Output filename</label><input id="agriOutput" placeholder="auto-generated"></div></div>
+          <p class="help">Band numbers are user-defined because Sentinel-2, Landsat and other products have different stacking orders. Verify your raster band order before processing.</p>
+          <button id="runAgri" class="btn primary">Generate index raster</button>
+          <pre id="agriLog">Select an uploaded multiband raster.</pre>
+        </div>
+        <div class="section">
+          <h2>Field geometry summary</h2>
+          <p class="help">Draw field boundaries on the map and calculate geodesic area/perimeter for rapid field-scale analysis.</p>
+          <button id="measureFields" class="btn">Summarize drawing-layer field geometry</button>
+          <div id="fieldSummary" class="result-box">No field polygons calculated yet.</div>
+        </div>
+      </section>
+
+      <section id="panel-climate" class="panel">
+        <div class="module-banner climate"><span class="module-icon">04</span><div><b>Agroclimatology</b><small>Reference evapotranspiration, thermal time and rainfall diagnostics.</small></div></div>
+        <div class="section">
+          <h2>FAO-56 daily reference ET₀</h2>
+          <div class="calc-grid">
+            <label>Tmax (°C)<input id="etTmax" type="number" step="any" value="28"></label>
+            <label>Tmin (°C)<input id="etTmin" type="number" step="any" value="18"></label>
+            <label>RH mean (%)<input id="etRh" type="number" min="1" max="100" step="any" value="70"></label>
+            <label>Wind at 2 m (m/s)<input id="etWind" type="number" min="0" step="any" value="2"></label>
+            <label>Solar radiation Rs (MJ m⁻² d⁻¹)<input id="etRs" type="number" min="0" step="any" value="18"></label>
+            <label>Elevation (m)<input id="etElev" type="number" step="any" value="1000"></label>
+            <label>Latitude (°)<input id="etLat" type="number" min="-90" max="90" step="any" value="25.6"></label>
+            <label>Day of year<input id="etDoy" type="number" min="1" max="366" value="200"></label>
+          </div>
+          <button id="calcEt0" class="btn primary">Calculate ET₀</button>
+          <div id="et0Result" class="result-box">Enter daily weather data.</div>
+        </div>
+        <div class="section">
+          <h2>Growing degree days</h2>
+          <div class="row"><div class="field"><label for="gddTmax">Tmax (°C)</label><input id="gddTmax" type="number" step="any" value="28"></div><div class="field"><label for="gddTmin">Tmin (°C)</label><input id="gddTmin" type="number" step="any" value="18"></div></div>
+          <div class="row"><div class="field"><label for="gddBase">Base temperature (°C)</label><input id="gddBase" type="number" step="any" value="10"></div><div class="field"><label for="gddUpper">Upper cutoff (°C, optional)</label><input id="gddUpper" type="number" step="any" placeholder="none"></div></div>
+          <button id="calcGdd" class="btn">Calculate GDD</button>
+          <div id="gddResult" class="result-box">Daily thermal time will appear here.</div>
+        </div>
+        <div class="section">
+          <h2>Rainfall effectiveness</h2>
+          <div class="row"><div class="field"><label for="rainMonthly">Monthly rainfall (mm)</label><input id="rainMonthly" type="number" min="0" step="any" value="150"></div><div class="field"><label for="rainNormal">Long-term normal (mm)</label><input id="rainNormal" type="number" min="0" step="any" value="180"></div></div>
+          <button id="calcRain" class="btn">Analyze rainfall</button>
+          <div id="rainResult" class="result-box">Effective rainfall and anomaly will appear here.</div>
+        </div>
+      </section>
+
+      <section id="panel-water" class="panel">
+        <div class="module-banner water"><span class="module-icon">05</span><div><b>Water management</b><small>Crop water requirement, irrigation demand, runoff and storage planning.</small></div></div>
+        <div class="section">
+          <h2>Crop water & irrigation requirement</h2>
+          <div class="calc-grid">
+            <label>ET₀ (mm/day)<input id="wmEt0" type="number" min="0" step="any" value="4"></label>
+            <label>Crop coefficient Kc<input id="wmKc" type="number" min="0" step="any" value="1.05"></label>
+            <label>Effective rainfall (mm/day)<input id="wmRain" type="number" min="0" step="any" value="1"></label>
+            <label>System efficiency (%)<input id="wmEff" type="number" min="1" max="100" step="any" value="75"></label>
+            <label>Area (ha)<input id="wmArea" type="number" min="0" step="any" value="1"></label>
+            <label>Planning days<input id="wmDays" type="number" min="1" step="1" value="7"></label>
+          </div>
+          <button id="calcWater" class="btn primary">Calculate irrigation requirement</button>
+          <div id="waterResult" class="result-box">Crop ET and irrigation volume will appear here.</div>
+        </div>
+        <div class="section">
+          <h2>SCS Curve Number runoff</h2>
+          <div class="row"><div class="field"><label for="runoffRain">Storm rainfall P (mm)</label><input id="runoffRain" type="number" min="0" step="any" value="100"></div><div class="field"><label for="runoffCn">Curve Number</label><input id="runoffCn" type="number" min="1" max="100" step="any" value="75"></div></div>
+          <button id="calcRunoff" class="btn">Calculate direct runoff</button>
+          <div id="runoffResult" class="result-box">Runoff depth and coefficient will appear here.</div>
+        </div>
+        <div class="section">
+          <h2>Farm pond / Jalkund storage</h2>
+          <div class="calc-grid">
+            <label>Catchment area (m²)<input id="pondCatch" type="number" min="0" step="any" value="1000"></label>
+            <label>Design rainfall (mm)<input id="pondRain" type="number" min="0" step="any" value="100"></label>
+            <label>Runoff coefficient<input id="pondCoeff" type="number" min="0" max="1" step="0.01" value="0.5"></label>
+            <label>Storage efficiency (%)<input id="pondEff" type="number" min="1" max="100" step="any" value="85"></label>
+          </div>
+          <button id="calcStorage" class="btn">Estimate harvestable storage</button>
+          <div id="storageResult" class="result-box">Potential harvestable water will appear here.</div>
+        </div>
+      </section>
+
+      <section id="panel-services" class="panel">
+        <div class="module-banner"><span class="module-icon">06</span><div><b>Web services</b><small>Basemaps and interoperable OGC layers.</small></div></div>
+        <div class="section"><h2>Basemap configuration</h2>
+          <div class="field"><label for="googleApiKey">Google Map Tiles API key</label><input id="googleApiKey" type="password" autocomplete="off" placeholder="Required only for Google basemaps"></div>
+          <button id="useGoogleKey" class="btn">Use Google key this session</button>
+          <p class="help">OSM and Esri satellite work without a Google key. Google Map/Satellite use the <b>Google Map Tiles API</b>: enable that API and billing for the key. The portal now validates the Google session and reports 400/403/429 errors directly. For a server-wide key, set <code>GEOPORTAL_GOOGLE_MAPS_API_KEY</code> for Tomcat.</p>
+        </div>
+        <div class="section"><h2>Add OGC service</h2>
+          <div class="field"><label for="ogcType">Service</label><select id="ogcType"><option>WMS</option><option>WFS</option><option>WMTS</option></select></div>
+          <div class="field"><label for="ogcUrl">Service URL</label><input id="ogcUrl" value="/geoserver/ows" placeholder="/geoserver/ows"></div>
+          <div class="field"><label for="ogcLayer">Layer / type name</label><input id="ogcLayer" placeholder="workspace:layer"></div>
+          <div class="field"><label for="ogcTitle">Display title</label><input id="ogcTitle" placeholder="Optional"></div>
+          <button id="addOgc" class="btn primary">Connect layer</button>
+          <p class="help">Same-origin GeoServer normally works without CORS. Remote services must permit browser CORS.</p>
+        </div>
+        <div class="section"><h2>Map layers</h2><div id="layerList"></div></div>
+      </section>
+
+      <section id="panel-export" class="panel">
+        <div class="module-banner export"><span class="module-icon">07</span><div><b>Map, report & data export</b><small>Create standard presentation products and analysis summaries.</small></div></div>
+        <div class="section"><h2>Drawing tools</h2>
+          <p class="help">Drawing and measurement are separate layers. Use these tools to create permanent map features for export.</p>
+          <div class="row"><button id="drawPoint" class="btn">Draw point</button><button id="drawLine" class="btn">Draw line</button></div>
+          <div class="row top-gap"><button id="drawPolygon" class="btn">Draw polygon</button><button id="clearDraw" class="btn danger">Clear drawings</button></div>
+          <div class="row top-gap"><button id="downloadGeojson" class="btn">Download GeoJSON</button><button id="downloadShp" class="btn primary">Download Shapefile</button></div>
+          <p class="help">Shapefile download is a ZIP containing <b>.shp, .shx, .dbf and .prj</b>. If drawings contain different geometry types, points, lines and polygons are exported as separate shapefiles in the same ZIP.</p>
+        </div>
+        <div class="section"><h2>Measurement tools</h2>
+          <p class="help">Measurement features are temporary and are not included in drawing downloads.</p>
+          <div class="row"><button id="measureDistance" class="btn">Measure distance</button><button id="measureArea" class="btn">Measure area</button></div>
+          <button id="clearMeasure" class="btn danger top-gap">Clear measurements</button>
+          <div id="measureResult" class="result-box top-gap">No active measurement.</div>
+        </div>
+        <div class="section"><h2>Standard map layout</h2>
+          <div class="field"><label for="mapTitle">Map title</label><input id="mapTitle" value="Agricultural Resource Analysis Map"></div>
+          <div class="row"><div class="field"><label for="mapAuthor">Prepared by</label><input id="mapAuthor" placeholder="Name / team"></div><div class="field"><label for="mapOrg">Organization</label><input id="mapOrg" placeholder="Institute / project"></div></div>
+          <div class="row"><div class="field"><label for="paperSize">Paper</label><select id="paperSize"><option>A4</option><option>A3</option></select></div><div class="field"><label for="orientation">Orientation</label><select id="orientation"><option value="landscape">Landscape</option><option value="portrait">Portrait</option></select></div></div>
+          <div class="field"><label for="mapNotes">Map note / data source</label><input id="mapNotes" placeholder="Data source, date, projection, etc."></div>
+          <div class="row"><button id="exportPng" class="btn">Export map PNG</button><button id="exportPdf" class="btn primary">Export standard PDF map</button></div>
+          <p class="help">PDF layout includes title, current map, latitude/longitude grid, legend, north arrow, approximate scale, coordinates, date and metadata. Some third-party tiles may restrict canvas export.</p>
+        </div>
+        <div class="section"><h2>Analysis report</h2>
+          <div class="row"><button id="exportReport" class="btn primary">Generate PDF report</button><button id="exportCsv" class="btn">Export analysis CSV</button></div>
+          <div id="historySummary" class="result-box">No analysis results recorded yet.</div>
+        </div>
+        <div class="section"><h2>Share map</h2>
+          <button id="shareLink" class="btn">Create share link</button>
+          <div class="field"><input id="shareOutput" readonly placeholder="Share URL appears here"></div>
+          <p class="help">The share link stores the map view, basemap and OGC configuration. Uploaded private files are not embedded.</p>
+        </div>
+      </section>
+    </div>
+    <div id="status" class="status">Initializing agricultural geoportal…</div>
+  </aside>
+
+  <main class="workspace">
+    <div id="map" aria-label="Interactive agricultural GIS map"></div>
+    <div id="mapInitError" class="map-init-error" hidden></div>
+    <img id="googleLogo" class="google-logo" src="https://developers.google.com/static/maps/documentation/images/google_on_white.png" alt="Google" hidden>
+    <div class="topbar">
+      <div class="toolbar">
+        <button class="toolbtn sidebar-restore" id="sidebarRestoreBtn" type="button" aria-label="Show analysis sidebar" title="Show sidebar">☰ Tools</button>
+        <a class="toolbtn showcase-link" href="index.html">Showcase</a>
+        <button class="toolbtn" id="homeBtn">India</button>
+        <button class="toolbtn" id="layersBtn">Layers</button>
+        <button class="toolbtn" id="filesBtn">Files</button>
+        <button class="toolbtn" id="fullscreenBtn" type="button" aria-label="Enter fullscreen map" title="Fullscreen map">⛶ Fullscreen</button>
+        <label class="basemap-label" for="basemapSelect">Basemap</label>
+        <select id="basemapSelect" class="basemap-select"><option value="osm">OSM</option><option value="satellite">Satellite</option><option value="google-road">Google Map</option><option value="google-satellite">Google Satellite</option></select>
+        <label class="basemap-label" for="gridModeSelect">Grid</label>
+        <select id="gridModeSelect" class="basemap-select grid-select" title="Latitude/longitude grid interval"><option value="auto">Auto grid</option><option value="5">5°</option><option value="2">2°</option><option value="1">1°</option><option value="0.5">0.5°</option><option value="0.25">0.25°</option><option value="off">Grid off</option></select>
+      </div>
+      <div class="spacer"></div>
+      <div id="coords" class="coords">Lon — · Lat —</div>
+    </div>
+    <div class="map-badge"><b>AgriGeo</b><span id="mapMode">Data & analysis workspace</span></div>
+    <aside id="drawer" class="drawer"><div id="drawerContent"></div></aside>
+  </main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/ol@10.10.0/dist/ol.js" onerror="this.onerror=null;this.src='https://unpkg.com/ol@10.10.0/dist/ol.js'"></script>
+<script src="https://cdn.jsdelivr.net/npm/shpjs@6.2.0/dist/shp.min.js" onerror="this.onerror=null;this.src='https://unpkg.com/shpjs@6.2.0/dist/shp.min.js'"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js" onerror="this.onerror=null;this.src='https://unpkg.com/jspdf@2.5.2/dist/jspdf.umd.min.js'"></script>
+<script src="assets/app.js?v=20260824-contextfix-v5"></script>
+</body>
+</html>

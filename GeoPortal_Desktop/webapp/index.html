@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="geoportal-api-base" content="/geoportal/">
+  <meta name="description" content="Interactive showcase for GIS, remote sensing, agriculture and agroclimatology tools, QGIS plugins and applications.">
+  <meta name="theme-color" content="#071a16">
+  <title>GeoSpatial Agriculture Innovation Hub</title>
+  <link rel="stylesheet" href="assets/landing.css">
+</head>
+<body>
+<div class="site-shell" id="top">
+  <header class="site-header" id="siteHeader">
+    <a class="identity" href="#top" aria-label="GeoSpatial Agriculture Innovation Hub home">
+      <span class="identity-mark" aria-hidden="true">
+        <svg viewBox="0 0 48 48"><path d="M7 32c7-2 11-8 14-17 7 3 12 9 14 18-8-5-19-5-28-1Z"/><path d="M14 35c6-5 13-8 21-8"/><circle cx="33" cy="13" r="5"/></svg>
+      </span>
+      <span><strong>GeoSpatial Agriculture</strong><small>Innovation & Research Hub</small></span>
+    </a>
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <a href="#solutions">Solutions</a><a href="#domains">Domains</a><a href="#field-intelligence">Field Intelligence</a><a href="#platform">Platform</a>
+    </nav>
+    <div class="header-actions">
+      <a class="text-link" href="/geoportal/geoportal.html">GIS Workspace</a>
+      <a class="button small primary" href="/geoportal/geoportal.html">Launch GeoPortal</a>
+      <button class="menu-button" id="menuButton" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Open navigation"><span></span><span></span><span></span></button>
+    </div>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+      <a href="#solutions">Solutions</a><a href="#domains">Domains</a><a href="#field-intelligence">Field Intelligence</a><a href="#platform">Platform</a><a href="/geoportal/geoportal.html">Launch GeoPortal</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero section-pad">
+      <div class="hero-copy reveal">
+        <span class="eyebrow"><i></i> SPATIAL INTELLIGENCE FOR AGRICULTURE</span>
+        <h1>From satellite pixels to <span>field decisions.</span></h1>
+        <p class="hero-lead">An integrated showcase of web GIS, QGIS plugins and research applications for geospatial analysis, remote sensing, agricultural systems and agroclimatology.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="/geoportal/geoportal.html">Open Interactive GeoPortal <span aria-hidden="true">↗</span></a>
+          <a class="button ghost" href="#solutions">Explore digital tools</a>
+        </div>
+        <div class="trust-row" aria-label="Technology domains">
+          <span>GIS</span><span>Remote Sensing</span><span>QGIS</span><span>LiDAR</span><span>Agroclimate</span>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal" aria-label="Illustration of geospatial agriculture data layers">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="visual-panel">
+          <div class="visual-top"><span class="mini-brand">FIELD INTELLIGENCE</span><span class="live-dot"><i></i> Spatial layers</span></div>
+          <svg class="terrain" viewBox="0 0 720 500" role="img" aria-label="Stylized agricultural landscape with satellite grid, contours and field zones">
+            <defs>
+              <linearGradient id="land" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#103d35"/><stop offset="1" stop-color="#08231f"/></linearGradient>
+              <linearGradient id="fieldA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7faa4b"/><stop offset="1" stop-color="#466f38"/></linearGradient>
+              <linearGradient id="fieldB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c2a957"/><stop offset="1" stop-color="#7c713d"/></linearGradient>
+              <filter id="soft"><feGaussianBlur stdDeviation="14"/></filter>
+            </defs>
+            <rect width="720" height="500" rx="28" fill="url(#land)"/>
+            <g opacity=".12" stroke="#dff7ea"><path d="M0 90H720M0 180H720M0 270H720M0 360H720M90 0V500M180 0V500M270 0V500M360 0V500M450 0V500M540 0V500M630 0V500"/></g>
+            <g class="field-polygons">
+              <path d="M45 345 228 250 323 310 231 462 69 447Z" fill="url(#fieldA)"/>
+              <path d="M235 246 368 176 476 231 323 310Z" fill="#608c43"/>
+              <path d="M329 313 478 236 656 320 544 451 233 462Z" fill="url(#fieldB)"/>
+              <path d="M371 172 515 96 663 174 478 231Z" fill="#315f43"/>
+            </g>
+            <g opacity=".65" fill="none" stroke="#b8dfbe" stroke-width="1.3">
+              <path d="M-25 122C127 68 142 177 298 116S533 55 754 103"/>
+              <path d="M-33 151C108 102 172 210 312 149s254-76 451-14"/>
+              <path d="M-26 190c123-43 227 50 345-4s243-83 436-28"/>
+              <path d="M-14 223c141-31 218 53 341 12s257-75 421-35"/>
+            </g>
+            <g class="scan-lines" opacity=".34" stroke="#75efd0" stroke-width="2"><path d="M105 20 385 500"/><path d="M190 0 470 500"/><path d="M275 0 555 500"/></g>
+            <g class="pins"><circle cx="471" cy="230" r="25" fill="#071b18" opacity=".8"/><circle cx="471" cy="230" r="10" fill="#70e5c1"/><circle cx="471" cy="230" r="4" fill="#fff"/></g>
+            <g transform="translate(497 198)"><rect width="164" height="65" rx="12" fill="#071b18" opacity=".93"/><text x="16" y="25" fill="#a6bdb4" font-size="12">Vegetation health</text><text x="16" y="49" fill="#fff" font-size="22" font-weight="700">NDVI 0.74</text><rect x="116" y="17" width="34" height="34" rx="8" fill="#183f35"/><path d="m126 37 7-9 7 6 5-8" fill="none" stroke="#70e5c1" stroke-width="2"/></g>
+            <g transform="translate(35 40)"><rect width="182" height="76" rx="14" fill="#071b18" opacity=".9"/><text x="16" y="25" fill="#a6bdb4" font-size="12">Weather layer</text><text x="16" y="51" fill="#fff" font-size="19" font-weight="700">24.6 °C</text><text x="94" y="50" fill="#74d6bb" font-size="12">RH 78%</text><path d="M16 64h146" stroke="#27483f"/><path d="M16 64c30-2 32-15 55-11s34-20 53-10 19-4 38-8" fill="none" stroke="#e3bf67" stroke-width="2"/></g>
+          </svg>
+          <div class="visual-chips"><span><i class="chip rs"></i>Sentinel imagery</span><span><i class="chip gis"></i>Vector analytics</span><span><i class="chip met"></i>Weather intelligence</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="metrics section-pad" aria-label="Platform capabilities">
+      <article><strong data-count="4">4</strong><span>Research domains</span></article>
+      <article><strong data-count="3">3</strong><span>OGC service types</span></article>
+      <article><strong data-count="20">20+</strong><span>Data & analysis workflows</span></article>
+      <article><strong data-count="1">1</strong><span>Integrated spatial hub</span></article>
+    </section>
+
+    <section class="solutions section-pad" id="solutions">
+      <div class="section-heading reveal">
+        <div><span class="eyebrow"><i></i> DIGITAL TOOL SHOWCASE</span><h2>One ecosystem. Multiple research tools.</h2></div>
+        <p>Discover geospatial platforms, QGIS extensions and decision-support applications designed around real agricultural and environmental workflows.</p>
+      </div>
+
+      <div class="filter-bar reveal">
+        <div class="filters" role="group" aria-label="Filter solutions">
+          <button type="button" class="filter active" data-filter="all">All</button>
+          <button type="button" class="filter" data-filter="gis">GIS</button>
+          <button type="button" class="filter" data-filter="rs">Remote Sensing</button>
+          <button type="button" class="filter" data-filter="agri">Agriculture</button>
+          <button type="button" class="filter" data-filter="climate">Agroclimatology</button>
+          <button type="button" class="filter" data-filter="qgis">QGIS Plugin</button>
+        </div>
+        <label class="search"><span aria-hidden="true">⌕</span><input id="solutionSearch" type="search" placeholder="Search tools…" aria-label="Search digital tools"></label>
+      </div>
+
+      <div class="solution-grid" id="solutionGrid">
+        <article class="solution-card featured reveal" data-tags="gis rs lidar raster vector ogc">
+          <div class="card-visual map-card">
+            <svg viewBox="0 0 500 235" aria-hidden="true"><defs><pattern id="grid" width="34" height="34" patternUnits="userSpaceOnUse"><path d="M34 0H0V34" fill="none" stroke="#fff" opacity=".07"/></pattern></defs><rect width="500" height="235" fill="#0b312d"/><rect width="500" height="235" fill="url(#grid)"/><path d="M-20 180c72-70 142-12 202-72s127-22 163-54 112-21 178-70" fill="none" stroke="#61d7ba" stroke-width="3"/><path d="M-10 199c85-63 158-9 215-61s128-13 170-45 86-13 145-61" fill="none" stroke="#b6d784" opacity=".65"/><g fill="#11231e" stroke="#a0c976"><path d="m80 140 88-48 68 51-81 63-84-28Z"/><path d="m239 140 90-52 85 50-91 69-88-29Z"/></g><circle cx="330" cy="88" r="8" fill="#76e8ca"/><circle cx="330" cy="88" r="17" fill="none" stroke="#76e8ca" opacity=".4"/></svg>
+            <span class="card-badge">Flagship platform</span>
+          </div>
+          <div class="card-body"><div class="card-meta"><span>WEB GIS</span><span class="status live">AVAILABLE</span></div><h3>AgriGeo Analytics Portal</h3><p>Integrated agricultural GIS, remote sensing, agroclimatology and water-management workspace with preprocessing, analysis, mapping, reports and export.</p><div class="tag-row"><span>WMS/WFS/WMTS</span><span>GDAL/OGR</span><span>LiDAR</span></div><div class="card-actions"><a class="button compact primary" href="/geoportal/geoportal.html">Launch workspace</a><button class="details-button" type="button" data-detail="geoportal">View capabilities →</button></div></div>
+        </article>
+
+        <article class="solution-card reveal" data-tags="gis qgis climate raster interpolation">
+          <div class="card-icon qgis-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="22" cy="22" r="13" fill="none" stroke="currentColor" stroke-width="5"/><path d="m28 28 12 12M31 24h10v10" fill="none" stroke="currentColor" stroke-width="5"/></svg></div>
+          <div class="card-body"><div class="card-meta"><span>QGIS PLUGIN</span><span class="status research">RESEARCH TOOL</span></div><h3>SATHI</h3><p>Spatial aggregation, temporal harmonization and interpolation workflows for climate and geospatial datasets inside QGIS.</p><div class="tag-row"><span>Raster</span><span>NetCDF</span><span>Temporal</span></div><div class="card-actions"><button class="button compact secondary details-button" type="button" data-detail="sathi">Explore plugin</button></div></div>
+        </article>
+
+        <article class="solution-card reveal" data-tags="gis rs raster vector aggregation statistics">
+          <div class="card-icon aggregate-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 9h32v30H8z"/><path d="M8 19h32M8 29h32M19 9v30M30 9v30"/><circle cx="14" cy="14" r="2"/><circle cx="25" cy="24" r="2"/><circle cx="35" cy="34" r="2"/></svg></div>
+          <div class="card-body"><div class="card-meta"><span>SPATIAL ANALYSIS</span><span class="status research">GIS TOOL</span></div><h3>Spatial Aggregation Mean</h3><p>Aggregate raster or gridded observations over polygons and spatial zones to generate reproducible mean-value summaries for mapping and analysis.</p><div class="tag-row"><span>Zonal mean</span><span>Raster</span><span>Aggregation</span></div><div class="card-actions"><button class="button compact secondary details-button" type="button" data-detail="spatialmean">Explore tool</button></div></div>
+        </article>
+
+        <article class="solution-card reveal" data-tags="gis rs lidar pointcloud vector automation">
+          <div class="card-icon lidar-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 6v7M11 15l6 4M37 15l-6 4"/><path d="M8 35c5-9 10-13 16-13s11 4 16 13"/><circle cx="24" cy="20" r="4"/><path d="M10 38h28"/><path d="m14 32 4-3 4 4 5-6 7 7"/></svg></div>
+          <div class="card-body"><div class="card-meta"><span>LIDAR + VECTOR</span><span class="status research">AUTOVECTOR</span></div><h3>LiDAR AutoVector Studio</h3><p>Point-cloud workflow studio for LiDAR preprocessing, terrain interpretation and assisted conversion of derived features into GIS-ready vector layers.</p><div class="tag-row"><span>LAS / LAZ</span><span>Point cloud</span><span>Vector</span></div><div class="card-actions"><button class="button compact secondary details-button" type="button" data-detail="lidarstudio">Explore studio</button></div></div>
+        </article>
+
+
+      </div>
+      <p class="empty-state" id="emptyState" hidden>No tools match this filter. Try another category or search term.</p>
+    </section>
+
+    <section class="domains section-pad" id="domains">
+      <div class="section-heading reveal"><div><span class="eyebrow"><i></i> RESEARCH DOMAINS</span><h2>Built where spatial science meets farming systems.</h2></div><p>Each domain contributes a different layer of evidence—from terrain and imagery to weather, crops and field management.</p></div>
+      <div class="domain-grid">
+        <article class="domain-card reveal"><span class="domain-number">01</span><svg viewBox="0 0 48 48"><path d="M7 13l12-6 12 6 10-5v27l-10 5-12-6-12 6Z"/><path d="M19 7v27m12-21v27"/></svg><h3>GIS & Spatial Analysis</h3><p>Vector overlay, raster processing, terrain modelling, geostatistics, OGC services and spatial data infrastructure.</p><ul><li>Raster & vector analytics</li><li>Web mapping & OGC</li><li>LiDAR & terrain</li></ul></article>
+        <article class="domain-card reveal"><span class="domain-number">02</span><svg viewBox="0 0 48 48"><path d="m9 15 15-8 15 8-15 8Z"/><path d="m9 24 15 8 15-8M9 33l15 8 15-8"/></svg><h3>Remote Sensing</h3><p>Satellite, UAV and field-image workflows for crop condition, land-cover mapping and biophysical assessment.</p><ul><li>Multispectral imagery</li><li>Vegetation indices</li><li>Image classification</li></ul></article>
+        <article class="domain-card reveal"><span class="domain-number">03</span><svg viewBox="0 0 48 48"><path d="M24 41V22"/><path d="M24 26c-8 0-13-5-13-13 8 0 13 5 13 13Zm0 6c8 0 13-5 13-13-8 0-13 5-13 13Z"/></svg><h3>Agriculture</h3><p>Digital tools that connect spatial evidence with crops, soils, water, field observations and farm-management decisions.</p><ul><li>Crop monitoring</li><li>Soil & water management</li><li>Decision support</li></ul></article>
+        <article class="domain-card reveal"><span class="domain-number">04</span><svg viewBox="0 0 48 48"><circle cx="24" cy="20" r="8"/><path d="M24 4v5m0 22v5M8 20H3m42 0h-5M13 9l-4-4m26 4 4-4"/><path d="M11 41c3-7 8-10 13-10s10 3 13 10"/></svg><h3>Agroclimatology</h3><p>Weather, climate extremes, ET, rainfall and agro-advisory intelligence for climate-resilient agricultural planning.</p><ul><li>Weather & climate data</li><li>ET & water requirement</li><li>Climate-risk analytics</li></ul></article>
+      </div>
+    </section>
+
+    <section class="field-intelligence section-pad" id="field-intelligence">
+      <div class="section-heading reveal">
+        <div><span class="eyebrow"><i></i> REAL-WORLD FIELD INTELLIGENCE</span><h2>Agriculture, climate and water—made interactive.</h2></div>
+        <p>Explore three domain views using real public-domain agricultural photographs with live analysis overlays. Move the controls to see how spatial indicators can be presented on the landing page.</p>
+      </div>
+
+      <div class="intelligence-grid">
+        <article class="intelligence-card reveal" data-intelligence="agriculture">
+          <div class="intelligence-photo">
+            <img src="assets/images/agriculture.jpg" alt="Corn field photographed by USDA" loading="lazy">
+            <div class="photo-shade"></div>
+            <div class="analysis-overlay agriculture-overlay" id="agriOverlay" aria-hidden="true"></div>
+            <div class="photo-label"><span>AGRICULTURE</span><strong>Crop condition</strong></div>
+            <div class="photo-hud">
+              <small>Crop vigor</small><b id="agriVigor">0.72</b><span>NDVI</span>
+            </div>
+          </div>
+          <div class="intelligence-body">
+            <h3>Field & Crop Intelligence</h3>
+            <p>Combine field imagery, crop vigor and spatial observations to move from visual inspection to map-ready agricultural evidence.</p>
+            <label class="intelligence-control" for="agriRange"><span>Vegetation-analysis overlay</span><output id="agriPercent">68%</output></label>
+            <input class="analysis-range" id="agriRange" type="range" min="0" max="100" value="68" aria-label="Agriculture vegetation overlay intensity">
+            <div class="intelligence-tags"><span>NDVI</span><span>Crop vigor</span><span>Field GIS</span></div>
+          </div>
+        </article>
+
+        <article class="intelligence-card reveal" data-intelligence="climate">
+          <div class="intelligence-photo">
+            <img src="assets/images/agroclimatology.jpg" alt="USDA agricultural weather station" loading="lazy">
+            <div class="photo-shade"></div>
+            <div class="weather-scan" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <div class="photo-label"><span>AGROCLIMATOLOGY</span><strong>Weather observations</strong></div>
+            <div class="photo-hud weather-hud">
+              <small id="climateMetricLabel">Air temperature</small><b id="climateMetricValue">24.6</b><span id="climateMetricUnit">°C</span>
+            </div>
+          </div>
+          <div class="intelligence-body">
+            <h3>Agroclimate Monitoring</h3>
+            <p>Translate weather-station observations into crop-relevant climate indicators for ET, rainfall, heat and advisory workflows.</p>
+            <div class="metric-switch" role="group" aria-label="Choose agroclimate metric">
+              <button type="button" class="metric-button active" data-climate-metric="temperature">Temperature</button>
+              <button type="button" class="metric-button" data-climate-metric="humidity">Humidity</button>
+              <button type="button" class="metric-button" data-climate-metric="rainfall">Rainfall</button>
+            </div>
+            <div class="mini-bars" aria-label="Illustrative agroclimate profile">
+              <span style="--bar:78%"></span><span style="--bar:55%"></span><span style="--bar:88%"></span><span style="--bar:64%"></span><span style="--bar:72%"></span><span style="--bar:48%"></span>
+            </div>
+          </div>
+        </article>
+
+        <article class="intelligence-card reveal" data-intelligence="water">
+          <div class="intelligence-photo">
+            <img src="assets/images/water-management.jpg" alt="Agricultural irrigation system photographed by USDA" loading="lazy">
+            <div class="photo-shade"></div>
+            <div class="water-overlay" id="waterOverlay" aria-hidden="true"><span></span><span></span><span></span></div>
+            <div class="photo-label"><span>WATER MANAGEMENT</span><strong>Irrigation intelligence</strong></div>
+            <div class="photo-hud water-hud">
+              <small>Gross irrigation</small><b id="waterValue">34</b><span>mm</span>
+            </div>
+          </div>
+          <div class="intelligence-body">
+            <h3>Water Management Analytics</h3>
+            <p>Connect ET, rainfall, irrigation demand and water-storage decisions with spatial field context and export-ready analysis.</p>
+            <label class="intelligence-control" for="waterRange"><span>Irrigation demand scenario</span><output id="waterPercent">58%</output></label>
+            <input class="analysis-range" id="waterRange" type="range" min="0" max="100" value="58" aria-label="Water management irrigation demand intensity">
+            <div class="intelligence-tags"><span>ETc</span><span>Irrigation</span><span>Storage</span></div>
+          </div>
+        </article>
+      </div>
+      <p class="photo-credit">Photography: USDA / USDA ARS / USDA NRCS public-domain imagery, locally packaged with this GeoPortal build.</p>
+    </section>
+
+    <section class="workflow section-pad" id="workflow">
+      <div class="workflow-copy reveal"><span class="eyebrow"><i></i> CONNECTED WORKFLOW</span><h2>Bring data in. Analyze it. Turn it into evidence.</h2><p>The platform architecture is designed around reproducible geospatial workflows rather than isolated visualization.</p><a class="button ghost light" href="/geoportal/geoportal.html">Start a GIS workflow</a></div>
+      <div class="workflow-flow reveal" aria-label="Data workflow">
+        <div class="flow-node"><span>01</span><b>INGEST</b><small>Raster · Vector · LiDAR · OGC · Climate</small></div><div class="flow-arrow">→</div>
+        <div class="flow-node"><span>02</span><b>PROCESS</b><small>GDAL · OGR · PDAL · QGIS workflows</small></div><div class="flow-arrow">→</div>
+        <div class="flow-node"><span>03</span><b>ANALYZE</b><small>Spatial · RS · Agriculture · Climate</small></div><div class="flow-arrow">→</div>
+        <div class="flow-node"><span>04</span><b>SHARE</b><small>Maps · Data · Reports · Decisions</small></div>
+      </div>
+    </section>
+
+    <section class="platform section-pad" id="platform">
+      <div class="platform-panel reveal">
+        <div class="platform-copy"><span class="eyebrow"><i></i> CORE GEO-PLATFORM</span><h2>A browser-based geospatial laboratory.</h2><p>Use the interactive workspace to connect web services, upload GIS datasets, visualize vectors, switch basemaps, process server datasets and export outputs.</p><div class="platform-list"><span>✓ Shapefile & GeoPackage</span><span>✓ GeoTIFF & raster tools</span><span>✓ WMS / WFS / WMTS</span><span>✓ LAS / LAZ workflows</span><span>✓ Draw & GeoJSON export</span><span>✓ Shareable map state</span></div><a class="button primary" href="/geoportal/geoportal.html">Enter GeoPortal Workspace</a></div>
+        <div class="terminal" aria-label="Example geospatial workflow"><div class="terminal-bar"><i></i><i></i><i></i><span>geo-workflow</span></div><pre><span class="comment"># Research workflow</span>
+<span class="prompt">›</span> upload <b>watershed.shp</b>
+<span class="ok">✓</span> CRS detected: EPSG:32646
+<span class="prompt">›</span> connect <b>Sentinel / WMS</b>
+<span class="ok">✓</span> map layer ready
+<span class="prompt">›</span> process <b>DEM → hillshade</b>
+<span class="ok">✓</span> result created
+<span class="prompt">›</span> export <b>GeoTIFF + GeoJSON</b>
+<span class="cursor">█</span></pre></div>
+      </div>
+    </section>
+
+    <section class="cta section-pad reveal"><div><span class="eyebrow"><i></i> OPEN THE WORKSPACE</span><h2>Explore, analyze and build with spatial data.</h2><p>Launch the GIS workspace from this showcase and continue into raster, vector, LiDAR and web-service analysis.</p></div><a class="button primary large" href="/geoportal/geoportal.html">Launch GeoPortal <span>↗</span></a></section>
+  </main>
+
+  <footer class="site-footer section-pad"><div class="footer-brand"><span class="identity-mark small-mark" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M7 32c7-2 11-8 14-17 7 3 12 9 14 18-8-5-19-5-28-1Z"/><path d="M14 35c6-5 13-8 21-8"/><circle cx="33" cy="13" r="5"/></svg></span><div><strong>GeoSpatial Agriculture Innovation Hub</strong><small>GIS · Remote Sensing · Agriculture · Agroclimatology</small></div></div><div class="footer-links"><a href="#solutions">Tools</a><a href="#domains">Domains</a><a href="/geoportal/geoportal.html">GeoPortal</a></div><p>Research technology showcase & spatial decision-support platform.</p></footer>
+</div>
+
+<div class="modal" id="detailModal" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" type="button" data-close-modal aria-label="Close details">×</button>
+    <span class="modal-kicker" id="modalKicker"></span><h2 id="modalTitle"></h2><p id="modalText"></p><div class="modal-features" id="modalFeatures"></div><div class="modal-actions" id="modalActions"></div>
+  </section>
+</div>
+<script src="assets/landing.js"></script>
+</body>
+</html>
